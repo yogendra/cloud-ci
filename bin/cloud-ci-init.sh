@@ -2,7 +2,7 @@
 SCRIPT_ROOT=$( cd `dirname $0`; pwd)
 PROJECT_ROOT=${PROJECT_ROOT:-$(cd $SCRIPT_ROOT/..; pwd)}
 
-SECRETS_ROOT=$PROJECT_ROOT/secrets
+SECRETS_ROOT=$PROJECT_ROOT/.secrets
 
 # install extra repo
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
@@ -29,5 +29,5 @@ rm -rf aws
 
 # install harbor
 curl -L https://github.com/goharbor/harbor/releases/download/v2.0.6/harbor-online-installer-v2.0.6.tgz -o harbor.tgz
-tar -xzvf harbor.tgz
-cp $SECRETS_ROOT/harbor.yml harbor/harbor.yml
+tar -o $PROJECT_ROOT -xzvf harbor.tgz
+cp $SECRETS_ROOT/harbor.yml $PROJECT_ROOT/harbor/harbor.yml
