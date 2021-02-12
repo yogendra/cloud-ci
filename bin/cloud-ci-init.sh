@@ -10,12 +10,12 @@ sudo add-apt-repository ppa:rmescandon/yq
 sudo apt update
 
 # install os packages
-sudo apt install -qqy unzip curl wget docker-compose python-minimal yq jq direnv 
+sudo apt install -qqy unzip curl wget docker-compose python2-minimal yq jq direnv 
 
 
 # install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install  kubectl /usr/local/bin
+sudo install  kubectl /usr/local/bin && rm kubectl
 
 # install aws cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -24,10 +24,10 @@ rm awscliv2.zip
 sudo aws/install
 rm -rf aws
 
-#install lego
-
-
 # install harbor
 curl -L https://github.com/goharbor/harbor/releases/download/v2.0.6/harbor-online-installer-v2.0.6.tgz -o harbor.tgz
 tar -o $PROJECT_ROOT -xzvf harbor.tgz
 cp $SECRETS_ROOT/harbor.yml $PROJECT_ROOT/harbor/harbor.yml
+cd harbor
+sudo ./install.sh --with-notary --with-clair --with-trivy --with-chartmuseum
+cd ..
